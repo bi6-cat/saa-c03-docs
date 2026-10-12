@@ -26,7 +26,8 @@ saa-c03/
 ## Cách học mỗi tuần (khoảng 10–12 giờ)
 
 1. **2–3 giờ**: xem video khoá chính (Maarek/Cantrill) của phần đó.
-2. **2 giờ**: đọc file `theory/weekN-*.md`, ghi chú chỗ chưa rõ, tự trả lời mục *Tự kiểm tra*.
+2. **3 giờ**: đọc file `theory/weekN-*.md`, ghi chú chỗ chưa rõ, tự trả lời mục *Tự kiểm tra*.
+   Trong file lý thuyết: **💡 Kinh nghiệm thực tế** = điều hay gặp khi vận hành hệ thống thật; **🎯 Mẹo thi** = cách đề hay hỏi; **⚠️ Hay nhầm** = cặp khái niệm dễ lẫn.
 3. **3–4 giờ**: làm `labs/labNN-*` → chạy `verify.sh` cho tới khi **toàn bộ PASS**.
 4. **Luôn luôn**: chạy `cleanup.sh` khi xong lab.
 5. **1–2 giờ**: làm 1 bộ câu hỏi (Tutorials Dojo / Skill Builder) cho chủ đề của tuần, ghi vào sổ lỗi.
