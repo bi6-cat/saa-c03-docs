@@ -42,6 +42,15 @@ saa-c03/
 | 6 | week6 | lab06 |
 | 7–8 | week7-8 (luyện đề, ôn) | làm lại lab nào còn yếu |
 
+## Bổ sung từ kinh nghiệm người khác (series devops.vn)
+
+- **Làm câu hỏi theo chủ đề ngay trong tuần học** (chế độ topic-based); full exam 65 câu để dành cho tuần 7–8.
+- **Ghi note ngắn dạng chuỗi từ khoá**, vd. `SQS => async => decouple => visibility timeout => DLQ => Standard/FIFO`. Đừng chép lại slide.
+- **Gặp concept khó thì xử lý ngay**: nhờ AI giải thích → xin ví dụ/sơ đồ → so với service dễ nhầm → đối chiếu AWS Docs → ghi lại vài từ khoá.
+- **Mô phỏng thi nghiêm túc**: không pause, không Google, không dùng AI, không xem giải thích giữa bài; luyện hoàn thành trong ~120 phút để còn buffer.
+- **Flag cả câu đúng nhưng không chắc**; cuối bài rà lại lỗi click nhầm, bỏ sót MOST/LEAST, multiple-response chọn thiếu.
+- **Kiểm tra mọi region** xem có tài nguyên bị quên; xem pricing trước khi bấm Create với resource lạ. Chi phí hands-on thực tế của tác giả khoảng 60 USD.
+
 ## Chuẩn bị môi trường lab (làm 1 lần, ~30 phút)
 
 > **Quy tắc an toàn tiền bạc – làm TRƯỚC khi tạo bất cứ thứ gì**

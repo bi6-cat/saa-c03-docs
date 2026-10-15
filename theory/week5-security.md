@@ -328,6 +328,24 @@ SCP phổ biến khác: cấm rời Organization, cấm tắt CloudTrail/GuardDu
 
 ---
 
+## 7b. Cross-account: kiểm tra từng lớp (tự vẽ sơ đồ)
+
+Ví dụ: role ở **Account A** đọc object trong bucket S3 ở **Account B**, object mã hoá bằng CMK. Một request phải qua **tất cả** các lớp sau; thiếu một Allow hoặc dính một Deny là AccessDenied:
+
+| # | Lớp | Câu hỏi kiểm tra |
+|---|---|---|
+| 1 | Principal | Principal nằm ở account nào, là user hay role? |
+| 2 | Identity policy (A) | Role/user ở A có Allow `s3:GetObject` (và `kms:Decrypt`) trên ARN bên B không? |
+| 3 | Trust policy | Nếu dùng assume role: trust policy của role cho phép principal gọi không? |
+| 4 | Resource policy (B) | Bucket policy ở B có Allow principal/account A không? |
+| 5 | SCP / boundary | Org của A (và B) có SCP/permissions boundary chặn thao tác không? |
+| 6 | KMS key policy | Key policy ở B có cho account A dùng key không (+ IAM policy ở A cho phép key đó)? |
+| 7 | Explicit Deny | Có Deny nào ở bất kỳ lớp nào không? (Deny thắng mọi Allow) |
+
+🎯 Cách luyện: vẽ hai hộp Account A và B, ghi principal, role, resource, rồi nối từng mũi tên với policy cho phép nó. Câu IAM khó trên đề thường chỉ là "thiếu một mũi tên".
+
+---
+
 ## 8. Bẫy thường gặp
 1. "Xoay vòng secret tự động" → **Secrets Manager** (không phải Parameter Store).
 2. "Ai đã xoá bucket/terminate instance?" → **CloudTrail**. "Cấu hình SG bị đổi lúc nào / bucket có tuân thủ không?" → **Config**.

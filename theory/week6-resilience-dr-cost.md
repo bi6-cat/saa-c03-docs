@@ -33,6 +33,18 @@
 
 ## 2. RPO / RTO & chiến lược DR
 
+### 2.0 HA vs Fault Tolerance vs DR – ba khái niệm hay bị trộn
+
+| | Mục tiêu | Phạm vi lỗi | Ví dụ | Chi phí |
+|---|---|---|---|---|
+| **High Availability (HA)** | **Giảm** downtime, failover nhanh (có thể gián đoạn vài giây–phút) | Lỗi instance / AZ | ASG đa AZ, RDS Multi-AZ (failover 60–120 giây) | Vừa |
+| **Fault Tolerance (FT)** | Tiếp tục chạy **gần như không gián đoạn** khi có lỗi | Lỗi component | Aurora/DynamoDB nhiều bản sao ghi sẵn, active/active, S3 (≥3 AZ) | Cao: cần dư thừa hơn, phức tạp hơn |
+| **Disaster Recovery (DR)** | Phục hồi sau sự cố **lớn** theo **RPO/RTO** | Mất cả Region / dữ liệu hỏng | Backup & Restore, Pilot Light, Warm Standby, Active/Active | Tuỳ chiến lược |
+
+- HA ≠ DR: Multi-AZ **không** cứu được khi mất cả Region; Multi-Region cũng **không** cứu được xoá nhầm/hỏng dữ liệu đã bị replicate (cần backup, versioning, point-in-time).
+- Đề nói "failover tự động, giảm downtime" → HA; "không được gián đoạn" → FT; "RPO/RTO sau thảm hoạ" → DR.
+- 🎯 **Tìm single point of failure trước khi chọn service "xịn"**: ASG 3 AZ nhưng DB chỉ 1 instance trong 1 AZ, hoặc 1 NAT Gateway dùng chung, thì hệ thống vẫn **không** resilient. Đi dọc luồng Route 53 → ALB → ASG → DB và hỏi "tầng nào chỉ có một?".
+
 ### 2.1 Định nghĩa
 ```
           Lần backup/sao chép cuối        Thảm hoạ               Hệ thống chạy lại

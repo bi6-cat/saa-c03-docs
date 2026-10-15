@@ -96,6 +96,26 @@ Hệ quả thực tế: phần **Security** nặng nhất – đừng ôn lệch
 - 15 câu không tính điểm có thể rất lạ – gặp câu "chưa từng nghe" đừng hoảng, đoán hợp lý rồi đi tiếp.
 - Câu "chọn 2": mỗi đáp án phải **tự đứng được**, không cần bổ trợ nhau trừ khi đề nói "kết hợp". Thường là 2 bước của một giải pháp hoặc 2 giải pháp độc lập cùng đúng.
 
+### 2.3b Bẫy "một từ khoá là chốt luôn"
+Bảng từ khoá ở 2.2 chỉ dùng để **thu hẹp**, không thay việc đọc hết kịch bản. Những phản xạ sai hay gặp:
+
+| Phản xạ sai | Vì sao có thể sai |
+|---|---|
+| "least overhead → Lambda" | Workload chạy lâu (> 15 phút), cần kiểm soát OS, dependency đặc biệt → Fargate/EC2/Batch. Lambda hợp **event ngắn, tải thất thường** |
+| "low latency → DynamoDB/DAX" | Phải xem access pattern: cần SQL/join/transaction phức tạp → Aurora/RDS (+ElastiCache). DAX **chỉ** cache cho DynamoDB |
+| "rẻ → Glacier / Spot" | Glacier không hợp dữ liệu cần lấy ngay; Spot không hợp DB production đơn lẻ hay job không retry được |
+| "managed/mới nhất = tốt hơn" | Đáp án đúng là cái **trade-off khớp ràng buộc**, không phải cái nhiều tính năng nhất |
+| "cost thấp" bằng cách bỏ Multi-AZ/mã hoá | Tối ưu chi phí **không** được hy sinh availability, security, vận hành mà đề đã yêu cầu |
+| "tải đọc lớn → Multi-AZ" | Multi-AZ = HA; scale đọc = Read Replica / cache |
+
+Thứ tự ưu tiên khi nhiều đáp án đều chạy được: (1) đáp ứng **requirement chính** → (2) không vi phạm security / availability → (3) rồi mới so **operational overhead, performance, cost** theo từ khoá đề (MOST/LEAST/MINIMUM).
+
+### 2.3c Đọc câu dài & câu nhiều bước
+- Đọc theo thứ tự: **kiến trúc hiện tại → vấn đề → yêu cầu → ràng buộc**; đừng sa vào chi tiết ngay.
+- Đáp án gồm nhiều bước (Step 1, 2, 3…): **một bước sai là loại cả đáp án**.
+- Câu IAM/KMS/cross-account: liệt kê từng lớp (identity policy, trust policy, resource policy, SCP, KMS key policy) và kiểm tra **explicit deny**.
+- Câu mạng đa account/đa Region: tách thành các câu nhỏ: CIDR có trùng không? route? replication? RPO/RTO? chi phí?
+
 ### 2.4 Mẫu đáp án nhiễu hay gặp (học để loại nhanh)
 
 | Mẫu nhiễu | Vì sao sai |
